@@ -1,4 +1,4 @@
-package lt.baltictalents.application.controller;
+package lt.baltictalents.application.service;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,18 +6,18 @@ import java.util.List;
 import lt.baltictalents.application.data.CarData;
 import lt.baltictalents.application.data.Fuel;
 
-public class CarDataController {
+public class CarDataService {
 	
 	private List<CarData> carsData = null;
-	private static CarDataController carDataController = null;
+	private static CarDataService carDataController = null;
 	
-	public CarDataController(){
+	public CarDataService(){
 		carsData = new LinkedList<>();
 	}
 	
-	public static CarDataController getInstance(){
+	public static CarDataService getInstance(){
 		if(carDataController == null){
-			carDataController = new CarDataController();
+			carDataController = new CarDataService();
 		}
 		return carDataController;
 	}
