@@ -1,5 +1,6 @@
 package lt.baltictalents.application.service;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,4 +34,28 @@ public class CarDataService {
 		return carsData;
 	}
 
+	public void upsert(CarData car) {		
+		Iterator<CarData> it = carsData.iterator();
+		while (it.hasNext()) {
+			CarData carData = it.next();
+			if (car.getLicNumber().equals(carData.getLicNumber())) {
+				int index = carsData.indexOf(carData);
+				carsData.remove(index);
+				carsData.add(index, car);
+				return;
+			}
+		}
+		carsData.add(car);
+	}
+
+	public void remove(CarData car) {
+		Iterator<CarData> it = carsData.iterator();
+		while (it.hasNext()) {
+			CarData carData = it.next();
+			if (car.getLicNumber().equals(carData.getLicNumber())) {
+				int index = carsData.indexOf(carData);
+				carsData.remove(index);				
+			}
+		}
+	}
 }

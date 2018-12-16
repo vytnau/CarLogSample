@@ -28,12 +28,14 @@ public class MyCarsView extends Application {
 	private static final String YEAR_COL = "Year";
 	private static final String NEW_BUTTON = "Create New Car";
 	private VBox root;
+	private TableView<CarData> table;
 	private WindowController controller;
 
 	@Override
 	public void start(Stage stage) {
 		controller = WindowController.getInstance();
-		TableView<CarData> table = new TableView<CarData>();
+		controller.updateWindowMap(this);
+		table = new TableView<CarData>();
 		TableColumn<CarData, String> licNumberCol = new TableColumn<CarData, String>(LICENSE_NUMBER_COL);
 		licNumberCol.setCellValueFactory(new PropertyValueFactory<CarData, String>("licNumber"));
 		TableColumn<CarData, String> makeCol = new TableColumn<CarData, String>(MAKE_COL);
@@ -44,17 +46,13 @@ public class MyCarsView extends Application {
 		yearCol.setCellValueFactory(new PropertyValueFactory<CarData, String>("year"));
 		TableColumn<CarData, Button> removeCol = new TableColumn<CarData, Button>();
 		removeCol.setCellFactory(ActionButtonTableCell.<CarData>forTableColumn("Remove", (CarData p) -> {
-			table.getItems().remove(p);
+			controller.removeCar(p);
 			return p;
 		}));
 
 		TableColumn<CarData, Button> editCol = new TableColumn<CarData, Button>();
-		editCol.setCellFactory(ActionButtonTableCell.<CarData>forTableColumn("Edit", (CarData p) -> {
-			try {
-				new NewCarView().start(stage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		editCol.setCellFactory(ActionButtonTableCell.<CarData>forTableColumn("Edit", (CarData p) -> {			
+			controller.openEditCarWindow(p);			
 			return p;
 		}));
 
@@ -89,6 +87,11 @@ public class MyCarsView extends Application {
 
 	public VBox getWindow() {
 		return root;
+	}
+	
+	public void updateTable(){
+		ObservableList<CarData> carsData = FXCollections.observableArrayList(controller.getCarsData());
+		table.setItems(carsData);
 	}
 
 	private void addNewCarButtonAction(Button button) {

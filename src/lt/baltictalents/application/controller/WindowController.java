@@ -16,7 +16,7 @@ public class WindowController {
 	private final static String MY_CARS_WINDOW = "MyCarsWindow";
 	private final static String NEW_CAR_WINDOW = "NewCarWindow";	
 	private Map<String, Application> windows;
-	private CarDataService carDataController;
+	private CarDataService carDataService;
 	private static WindowController controller;
 
 	public static WindowController getInstance() {
@@ -28,8 +28,8 @@ public class WindowController {
 
 	public WindowController() {
 		windows = new HashMap<>();
-		carDataController = new CarDataService();
-		carDataController.initList();
+		carDataService = new CarDataService();
+		carDataService.initList();
 		initWindows();
 	}
 
@@ -44,7 +44,7 @@ public class WindowController {
 	}
 
 	public List<CarData> getCarsData() {
-		return carDataController.getCarsData();
+		return carDataService.getCarsData();
 	}
 
 	public void openCreateCarWindow() {
@@ -52,8 +52,10 @@ public class WindowController {
 		openWindow(app);
 	}
 	
-	public void openEditCarWindow() {
-		openCreateCarWindow();
+	public void openEditCarWindow(CarData carData) {
+		Application app = windows.get(NEW_CAR_WINDOW);		
+		openWindow(app);
+		((NewCarView)app).editCar(carData);
 	}
 
 	private void openWindow(Application app) {
@@ -63,5 +65,21 @@ public class WindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void upsertCar(CarData car) {
+		carDataService.upsert(car);
+		Application app = windows.get(MY_CARS_WINDOW);
+		((MyCarsView)app).updateTable();
+	}
+	
+	public void removeCar(CarData car){
+		carDataService.remove(car);
+		Application app = windows.get(MY_CARS_WINDOW);
+		((MyCarsView)app).updateTable();
+	}
+	
+	public void updateWindowMap(Application app){
+		windows.put(MY_CARS_WINDOW, app);
 	}
 }

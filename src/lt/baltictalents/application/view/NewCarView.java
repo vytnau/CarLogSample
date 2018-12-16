@@ -18,10 +18,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lt.baltictalents.application.controller.WindowController;
+import lt.baltictalents.application.data.CarData;
+import lt.baltictalents.application.data.Fuel;
 
 public class NewCarView extends Application {
 
-	private static final String TITLE = "Create new car";
+	private static final String NEW_CAR_TITLE = "Create new car";
+	private static final String EDIT_CAR_TITLE = "Edit car";
 	private static final String HEADER_LABEL = "New Car Form";
 	private static final String MAKE_LABEL = "Make:";
 	private static final String MODEL_LABEL = "Model:";
@@ -30,7 +34,8 @@ public class NewCarView extends Application {
 	private static final String ENGIINE_LABEL = "Engine:";
 	private static final String FUEL_TYPE_LABEL = "Fuel Type:";
 	private static final String FUEL_TANK_LABEL = "Fuel Tank Capacity:";
-	private static final String SUBMIT_BUTTON = "Submit";
+	private static final String POWER_LABEL = "Power KW";
+	private static final String SUBMIT_BUTTON = "Save";
 	private static final String CANCEL_BUTTON = "Cancel";
 	private static final String ERROR_WINDOW = "Car Registration Error!";
 	private static final String CAR_MAKE_ERROR = "Please enter car make";
@@ -50,6 +55,9 @@ public class NewCarView extends Application {
 	private TextField engineField;
 	private TextField fuelTankField;
 	private TextField fuelTypeField;
+	private TextField powerField;
+	private Stage stage;
+	private WindowController controller;	
 
 	private GridPane createRegistrationFormPane() {
 		GridPane gridPane = new GridPane();
@@ -115,19 +123,25 @@ public class NewCarView extends Application {
 		fuelTypeField = new TextField();
 		fuelTypeField.setPrefHeight(40);
 		gridPane.add(fuelTypeField, 1, 7);
+		
+		Label powerLabel = new Label(POWER_LABEL);
+		gridPane.add(powerLabel, 0, 8);
+		powerField = new TextField();
+		powerField.setPrefHeight(40);
+		gridPane.add(powerField, 1, 8);
 
 		Button submitButton = new Button(SUBMIT_BUTTON);
 		submitButton.setPrefHeight(40);
 		submitButton.setDefaultButton(true);
 		submitButton.setPrefWidth(100);
-		gridPane.add(submitButton, 0, 8);
+		gridPane.add(submitButton, 0, 9);
 		addSubmitButtonAction(submitButton, gridPane);
 
 		Button cancelButton = new Button(CANCEL_BUTTON);
 		cancelButton.setPrefHeight(40);
 		cancelButton.setPrefWidth(100);
 		cancelButton.setCancelButton(true);
-		gridPane.add(cancelButton, 1, 8);
+		gridPane.add(cancelButton, 1, 9);
 		addCancelButtonAction(cancelButton, gridPane);
 	}
 
@@ -178,12 +192,26 @@ public class NewCarView extends Application {
 					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW,
 							CAR_FUEL_TYPE_ERROR);
 					return;
-				}
-
-				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), REGISTRATION_SUCCESS,
-						EMPTY_TXT);
+				}											
+				CarData car = createCar();				
+				controller.upsertCar(car);
+				Stage stage = (Stage) gridPane.getScene().getWindow();
+				stage.close();
 			}
 		});
+	}
+	
+	private CarData createCar(){
+		String make = makeField.getText();
+		String model = modelField.getText();
+		int year = Integer.parseInt(yearField.getText());
+		String licNumber = licNumbField.getText();
+		String engine = engineField.getText();
+		int power = Integer.parseInt(powerField.getText());
+		int fuelTank = Integer.parseInt(fuelTankField.getText());
+		Fuel fuelType = Fuel.mapEnum(fuelTypeField.getText());
+		CarData carData = new CarData(make, model, year, licNumber, engine, power, fuelTank, fuelType);
+		return carData;
 	}
 
 	private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
@@ -197,16 +225,30 @@ public class NewCarView extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle(TITLE);
+		controller = WindowController.getInstance();
+		stage = primaryStage;
+		stage.setTitle(NEW_CAR_TITLE);
 		GridPane gridPane = createRegistrationFormPane();
 		addUIControls(gridPane);
 		Scene scene = new Scene(gridPane, 800, 500);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		stage.setScene(scene);
+		stage.show();
 	}
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public void editCar(CarData carData) {
+		stage.setTitle(EDIT_CAR_TITLE);
+		makeField.setText(carData.getMake());
+		modelField.setText(carData.getModel());
+		fuelTankField.setText(String.valueOf(carData.getFuelTank()));
+		engineField.setText(carData.getEngine());
+		fuelTypeField.setText(String.valueOf(carData.getFuel()));
+		licNumbField.setText(carData.getLicNumber());
+		yearField.setText(String.valueOf(carData.getYear()));
+		powerField.setText(String.valueOf(carData.getPower()));
 	}
 
 }
