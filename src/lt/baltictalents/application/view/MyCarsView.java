@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lt.baltictalents.application.controller.CarDataController;
 import lt.baltictalents.application.data.CarData;
+import lt.baltictalents.application.view.items.ActionButtonTableCell;
 
 public class MyCarsView extends Application {
 	private static final String TITLE = "My cars";
@@ -35,7 +37,24 @@ public class MyCarsView extends Application {
 		modelCol.setCellValueFactory(new PropertyValueFactory<CarData, String>("model"));		
 		TableColumn<CarData, String> yearCol = new TableColumn<CarData, String>(YEAR_COL);
 		yearCol.setCellValueFactory(new PropertyValueFactory<CarData, String>("year"));
-		table.getColumns().addAll(licNumberCol, makeCol, modelCol, yearCol);
+		TableColumn<CarData, Button> removeCol = new TableColumn<CarData, Button>();
+		removeCol.setCellFactory(ActionButtonTableCell.<CarData>forTableColumn("Remove", (CarData p) -> {
+		    table.getItems().remove(p);
+		    return p;
+		})); 
+		
+		TableColumn<CarData, Button> editCol = new TableColumn<CarData, Button>();
+		editCol.setCellFactory(ActionButtonTableCell.<CarData>forTableColumn("Edit", (CarData p) -> {
+			try {
+				new NewCarView().start(stage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		    return p;
+		})); 
+		
+		
+		table.getColumns().addAll(licNumberCol, makeCol, modelCol, yearCol, editCol, removeCol);
 
 		ObservableList<CarData> carsData = FXCollections.observableArrayList(carDataController.getCarsData());
 		table.setItems(carsData);
