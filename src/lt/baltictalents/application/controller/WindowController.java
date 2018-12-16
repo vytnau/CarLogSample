@@ -14,7 +14,7 @@ import lt.baltictalents.application.view.NewCarView;
 public class WindowController {
 
 	private final static String MY_CARS_WINDOW = "MyCarsWindow";
-	private final static String NEW_CAR_WINDOW = "NewCarWindow";
+	private final static String NEW_CAR_WINDOW = "NewCarWindow";	
 	private Map<String, Application> windows;
 	private CarDataService carDataController;
 	private static WindowController controller;
@@ -52,12 +52,16 @@ public class WindowController {
 		openWindow(app);
 	}
 	
-	private void openWindow(Application app){
+	public void openEditCarWindow() {
+		openCreateCarWindow();
+	}
+
+	private void openWindow(Application app) {
 		Stage stage = new Stage();
 		try {
 			app.start(stage);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 }

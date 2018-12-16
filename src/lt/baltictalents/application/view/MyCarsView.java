@@ -86,8 +86,8 @@ public class MyCarsView extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-	public VBox getWindow(){
+
+	public VBox getWindow() {
 		return root;
 	}
 
@@ -99,7 +99,7 @@ public class MyCarsView extends Application {
 				controller.openCreateCarWindow();
 			}
 		});
-	}	
+	}
 
 	public static void main(String[] args) {
 		launch(args);

@@ -19,8 +19,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class NewCarView extends Application{	
-	
+public class NewCarView extends Application {
+
 	private static final String TITLE = "Create new car";
 	private static final String HEADER_LABEL = "New Car Form";
 	private static final String MAKE_LABEL = "Make:";
@@ -42,7 +42,7 @@ public class NewCarView extends Application{
 	private static final String CAR_FUEL_TYPE_ERROR = "Please enter car fuel type";
 	private static final String REGISTRATION_SUCCESS = "Registration Successful!";
 	private static final String EMPTY_TXT = "";
-	
+
 	private TextField makeField;
 	private TextField modelField;
 	private TextField licNumbField;
@@ -50,160 +50,163 @@ public class NewCarView extends Application{
 	private TextField engineField;
 	private TextField fuelTankField;
 	private TextField fuelTypeField;
-	
+
 	private GridPane createRegistrationFormPane() {
-	    GridPane gridPane = new GridPane();
-	    gridPane.setAlignment(Pos.CENTER);
-	    gridPane.setPadding(new Insets(40, 40, 40, 40));
-	    gridPane.setHgap(10);
-	    gridPane.setVgap(10);
-	    ColumnConstraints columnOneConstraints = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-	    columnOneConstraints.setHalignment(HPos.RIGHT);
-	    ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
-	    columnTwoConstrains.setHgrow(Priority.ALWAYS);
+		GridPane gridPane = new GridPane();
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setPadding(new Insets(40, 40, 40, 40));
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		ColumnConstraints columnOneConstraints = new ColumnConstraints(100, 100, Double.MAX_VALUE);
+		columnOneConstraints.setHalignment(HPos.RIGHT);
+		ColumnConstraints columnTwoConstrains = new ColumnConstraints(200, 200, Double.MAX_VALUE);
+		columnTwoConstrains.setHgrow(Priority.ALWAYS);
 
-	    gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
-	    
-	    return gridPane;
+		gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
+
+		return gridPane;
 	}
-	
+
 	private void addUIControls(GridPane gridPane) {
-	    Label headerLabel = new Label(HEADER_LABEL);
-	    headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-	    gridPane.add(headerLabel, 0,0,2,1);
-	    GridPane.setHalignment(headerLabel, HPos.CENTER);
-	    GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
-	    
-	    Label makeLabel = new Label(MAKE_LABEL);
-	    gridPane.add(makeLabel, 0,1);
-	    makeField = new TextField();
-	    makeField.setPrefHeight(40);
-	    gridPane.add(makeField, 1,1);
+		Label headerLabel = new Label(HEADER_LABEL);
+		headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+		gridPane.add(headerLabel, 0, 0, 2, 1);
+		GridPane.setHalignment(headerLabel, HPos.CENTER);
+		GridPane.setMargin(headerLabel, new Insets(20, 0, 20, 0));
 
-	    Label modelLabel = new Label(MODEL_LABEL);
-	    gridPane.add(modelLabel, 0, 2);
-	    modelField = new TextField();
-	    modelField.setPrefHeight(40);
-	    gridPane.add(modelField, 1, 2);
-	    
-	    Label licNumbLabel = new Label(LICENSE_NUMBER_LABEL);
-	    gridPane.add(licNumbLabel, 0, 3);
-	    licNumbField = new TextField();
-	    licNumbField.setPrefHeight(40);
-	    gridPane.add(licNumbField, 1, 3);
-	    
-	    Label yearLabel = new Label(YEAR_LABEL);
-	    gridPane.add(yearLabel, 0, 4);
-	    yearField = new TextField();
-	    yearField.setPrefHeight(40);
-	    gridPane.add(yearField, 1, 4);
-	    
-	    Label engineLabel = new Label(ENGIINE_LABEL);
-	    gridPane.add(engineLabel, 0, 5);
-	    engineField = new TextField();
-	    engineField.setPrefHeight(40);
-	    gridPane.add(engineField, 1, 5);
-	    
-	    Label fuelTankLabel = new Label(FUEL_TANK_LABEL);
-	    gridPane.add(fuelTankLabel, 0, 6);
-	    fuelTankField = new TextField();
-	    fuelTankField.setPrefHeight(40);
-	    gridPane.add(fuelTankField, 1, 6);
-	    
-	    Label fuelTypeLabel = new Label(FUEL_TYPE_LABEL);
-	    gridPane.add(fuelTypeLabel, 0, 7);
-	    fuelTypeField = new TextField();
-	    fuelTypeField.setPrefHeight(40);
-	    gridPane.add(fuelTypeField, 1, 7);
+		Label makeLabel = new Label(MAKE_LABEL);
+		gridPane.add(makeLabel, 0, 1);
+		makeField = new TextField();
+		makeField.setPrefHeight(40);
+		gridPane.add(makeField, 1, 1);
 
-	    Button submitButton = new Button(SUBMIT_BUTTON);
-	    submitButton.setPrefHeight(40);
-	    submitButton.setDefaultButton(true);
-	    submitButton.setPrefWidth(100);
-	    gridPane.add(submitButton, 0, 8);
-	    addSubmitButtonAction(submitButton, gridPane);
-	    
-	    Button cancelButton = new Button(CANCEL_BUTTON);
-	    cancelButton.setPrefHeight(40);	    
-	    cancelButton.setPrefWidth(100);
-	    cancelButton.setCancelButton(true);
-	    gridPane.add(cancelButton, 1, 8);	 
-	    addCancelButtonAction(cancelButton, gridPane);
+		Label modelLabel = new Label(MODEL_LABEL);
+		gridPane.add(modelLabel, 0, 2);
+		modelField = new TextField();
+		modelField.setPrefHeight(40);
+		gridPane.add(modelField, 1, 2);
+
+		Label licNumbLabel = new Label(LICENSE_NUMBER_LABEL);
+		gridPane.add(licNumbLabel, 0, 3);
+		licNumbField = new TextField();
+		licNumbField.setPrefHeight(40);
+		gridPane.add(licNumbField, 1, 3);
+
+		Label yearLabel = new Label(YEAR_LABEL);
+		gridPane.add(yearLabel, 0, 4);
+		yearField = new TextField();
+		yearField.setPrefHeight(40);
+		gridPane.add(yearField, 1, 4);
+
+		Label engineLabel = new Label(ENGIINE_LABEL);
+		gridPane.add(engineLabel, 0, 5);
+		engineField = new TextField();
+		engineField.setPrefHeight(40);
+		gridPane.add(engineField, 1, 5);
+
+		Label fuelTankLabel = new Label(FUEL_TANK_LABEL);
+		gridPane.add(fuelTankLabel, 0, 6);
+		fuelTankField = new TextField();
+		fuelTankField.setPrefHeight(40);
+		gridPane.add(fuelTankField, 1, 6);
+
+		Label fuelTypeLabel = new Label(FUEL_TYPE_LABEL);
+		gridPane.add(fuelTypeLabel, 0, 7);
+		fuelTypeField = new TextField();
+		fuelTypeField.setPrefHeight(40);
+		gridPane.add(fuelTypeField, 1, 7);
+
+		Button submitButton = new Button(SUBMIT_BUTTON);
+		submitButton.setPrefHeight(40);
+		submitButton.setDefaultButton(true);
+		submitButton.setPrefWidth(100);
+		gridPane.add(submitButton, 0, 8);
+		addSubmitButtonAction(submitButton, gridPane);
+
+		Button cancelButton = new Button(CANCEL_BUTTON);
+		cancelButton.setPrefHeight(40);
+		cancelButton.setPrefWidth(100);
+		cancelButton.setCancelButton(true);
+		gridPane.add(cancelButton, 1, 8);
+		addCancelButtonAction(cancelButton, gridPane);
 	}
-	
-	private void addCancelButtonAction(Button button, GridPane gridPane){
+
+	private void addCancelButtonAction(Button button, GridPane gridPane) {
 		button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-            	Stage stage = (Stage) gridPane.getScene().getWindow();
-            	stage.close();
-            }
+			@Override
+			public void handle(ActionEvent event) {
+				Stage stage = (Stage) gridPane.getScene().getWindow();
+				stage.close();
+			}
 		});
 	}
-	
-	private void addSubmitButtonAction(Button button, GridPane gridPane){
-		button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(makeField.getText().isEmpty()) {
-                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_MAKE_ERROR);
-                    return;
-                }
-                if(modelField.getText().isEmpty()) {
-                	showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_MODEL_ERROR);
-                    return;
-                }
-                if(licNumbField.getText().isEmpty()) {
-                	showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_LIC_NUMB_ERROR);
-                    return;
-                }
-                
-                if(yearField.getText().isEmpty()) {
-                	showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_YEAR_ERROR);
-                    return;
-                }
-                
-                if(engineField.getText().isEmpty()) {
-                	showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_ENGINE_ERROR);
-                    return;
-                }
-                
-                if(fuelTankField.getText().isEmpty()) {
-                	showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_FUEL_TANK_ERROR);
-                    return;
-                }
-                
-                if(fuelTypeField.getText().isEmpty()) {
-                	showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_FUEL_TYPE_ERROR);
-                    return;
-                }
 
-                showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), REGISTRATION_SUCCESS, EMPTY_TXT);
-            }
-        });
+	private void addSubmitButtonAction(Button button, GridPane gridPane) {
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (makeField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_MAKE_ERROR);
+					return;
+				}
+				if (modelField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_MODEL_ERROR);
+					return;
+				}
+				if (licNumbField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_LIC_NUMB_ERROR);
+					return;
+				}
+
+				if (yearField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_YEAR_ERROR);
+					return;
+				}
+
+				if (engineField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW, CAR_ENGINE_ERROR);
+					return;
+				}
+
+				if (fuelTankField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW,
+							CAR_FUEL_TANK_ERROR);
+					return;
+				}
+
+				if (fuelTypeField.getText().isEmpty()) {
+					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), ERROR_WINDOW,
+							CAR_FUEL_TYPE_ERROR);
+					return;
+				}
+
+				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), REGISTRATION_SUCCESS,
+						EMPTY_TXT);
+			}
+		});
 	}
-	
+
 	private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(owner);
-        alert.show();
-    }
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(owner);
+		alert.show();
+	}
 
 	@Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle(TITLE);
-        GridPane gridPane = createRegistrationFormPane();
-        addUIControls(gridPane);
-        Scene scene = new Scene(gridPane, 800, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle(TITLE);
+		GridPane gridPane = createRegistrationFormPane();
+		addUIControls(gridPane);
+		Scene scene = new Scene(gridPane, 800, 500);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
 
 }
