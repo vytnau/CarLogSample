@@ -7,6 +7,12 @@ public abstract class BaseData {
 	protected long id;
 	private Date createDate;
 	private Date updateDate;
+	
+	public BaseData(){
+		long currentTime = System.currentTimeMillis();
+		this.createDate = new Date(currentTime);
+		this.updateDate = new Date(currentTime);		
+	}
 
 	public Date getCreateDate() {
 		return createDate;

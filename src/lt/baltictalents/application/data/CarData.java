@@ -5,10 +5,31 @@ public class CarData extends BaseData{
 	private String model;
 	private String licNumber;
 	private String engine;
+	private long year;
 	private int power;
 	private int fuelTank;
 	private Fuel fuel;
 	
+	public CarData(String make, String model, long year, String licNumber, String engine, int power, int fuelTank, Fuel fuelType){
+		super();
+		this.licNumber = licNumber;
+		this.make = make;
+		this.model = model;
+		this.engine = engine;
+		this.power = power;
+		this.fuelTank = fuelTank;
+		this.fuel = fuelType;
+		this.year = year;
+	}
+	
+	public long getYear() {
+		return year;
+	}
+
+	public void setYear(long year) {
+		this.year = year;
+	}
+
 	public int getFuelTank() {
 		return fuelTank;
 	}
