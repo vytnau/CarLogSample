@@ -124,10 +124,21 @@ public class NewCarView extends Application{
 	    addSubmitButtonAction(submitButton, gridPane);
 	    
 	    Button cancelButton = new Button(CANCEL_BUTTON);
-	    cancelButton.setPrefHeight(40);
-	    cancelButton.setDefaultButton(true);
-	    cancelButton.setPrefWidth(100);	    
-	    gridPane.add(cancelButton, 1, 8);	    
+	    cancelButton.setPrefHeight(40);	    
+	    cancelButton.setPrefWidth(100);
+	    cancelButton.setCancelButton(true);
+	    gridPane.add(cancelButton, 1, 8);	 
+	    addCancelButtonAction(cancelButton, gridPane);
+	}
+	
+	private void addCancelButtonAction(Button button, GridPane gridPane){
+		button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	Stage stage = (Stage) gridPane.getScene().getWindow();
+            	stage.close();
+            }
+		});
 	}
 	
 	private void addSubmitButtonAction(Button button, GridPane gridPane){
